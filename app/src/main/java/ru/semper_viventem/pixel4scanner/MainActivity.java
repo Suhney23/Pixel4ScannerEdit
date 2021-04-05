@@ -143,16 +143,8 @@ public class MainActivity extends AppCompatActivity implements OnTouchEventListe
         findViewById(R.id.captureButton).setOnClickListener(v -> switchCaptured());
         findViewById(R.id.shareButton).setOnClickListener(v -> shareDepthMap());
         findViewById(R.id.licenseButton).setOnClickListener(v -> startActivity(LicenseActivity.Companion.getInstance(this)));
-        //Added a save button to save to image gallery
-        Button saveButton =  findViewById(R.id.saveButton);
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, GalleryActivity.class));
-
-            }
-        });
+        // Opens the Gallery.xml tab adn saves the bitmap to it
+        findViewById(R.id.saveButton).setOnClickListener(v -> saveBitmap());
         ImageView imageView = findViewById(R.id.depthMapView);
         this.depthMapView = imageView;
         imageView.setMaxHeight(DefaultRenderConfiguration.IMAGE_WIDTH);
@@ -172,7 +164,18 @@ public class MainActivity extends AppCompatActivity implements OnTouchEventListe
         getWindow().addFlags(128);
     }
 
+    //Added a save button to save to image gallery
+    public void saveBitmap() {
+        Button saveButton =  findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, GalleryActivity.class));
+                ShareUtilsKt.saveAsFile(MainActivity.this, actualDepthBitmap);
+            }
+        });
 
+    }
 
     public void onResume() {
         Log.i(TAG, "onResume");

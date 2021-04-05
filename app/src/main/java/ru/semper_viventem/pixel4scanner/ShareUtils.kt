@@ -39,7 +39,7 @@ private fun scaleDepthBitmap(depthMap: Bitmap): Bitmap {
     return newMap
 }
 
-private fun saveAsFile(activity: Activity, bitmap: Bitmap): Uri {
+fun saveAsFile(activity: Activity, bitmap: Bitmap): Uri {
     val cachePath = File(activity.externalCacheDir, DIRECTORY)
     cachePath.mkdir()
 
